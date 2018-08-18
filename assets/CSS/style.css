@@ -1,4 +1,75 @@
 body {
     text-align: center;
     font-family: 'Luckiest Guy', cursive;
+    background-image: url("../Images/background.JPG");
+    color: white;
 }
+
+#title {
+    width: 500px;
+    margin-left: -175px;
+    margin-bottom: 55px;
+}
+
+#score {
+    padding-top: 65px;
+    margin-left: 40px;
+    text-decoration: underline;
+}
+
+#wins, #losses {
+    margin-left: 15px;
+}
+
+#score-board {
+    background-color: white;
+    border: 2px solid #f2f411;
+    height: 250px;
+    color: #6f9ae5;
+}
+
+#hidden-word {
+    width: 100%;
+    height: 125px;
+    background-color: white;
+    border: 2px solid #f2f411;
+    color: #6f9ae5;
+    margin: 0px; 
+    font-size: 90px;
+}
+
+#letters-guessed  {
+    width: 570px;
+    height: 125px;
+    background-color: white;
+    border: 2px solid #f2f411;
+    color: #6f9ae5;
+    margin-bottom: 0px;
+    margin-left: -15px;
+}
+
+#picture-container {
+    width: 100%;
+    height: 250px;
+    background-color: white;
+    border: 2px solid #f2f411;
+    margin-left: -15px;
+}
+
+#picture {
+    height: 90%;
+    max-width: 90%;
+}
+
+#message {
+    width: 1110px;
+    background-color: white;
+    border: 2px solid #f2f411;
+    color: #6f9ae5;
+    margin-left: 15px;
+}
+
+/* font colors 
+    blue: 6f9ae5
+    yellow: f2f411
+    gray: d2d2c9 */
