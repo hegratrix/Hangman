@@ -2,7 +2,8 @@ body {
     text-align: center;
     font-family: 'Luckiest Guy', cursive;
     background-image: url("../Images/background.JPG");
-    color: white;
+    color: #6f9ae5;
+    justify-content: center;
 }
 
 #title {
@@ -25,7 +26,6 @@ body {
     background-color: white;
     border: 2px solid #f2f411;
     height: 250px;
-    color: #6f9ae5;
 }
 
 #hidden-word {
@@ -33,19 +33,28 @@ body {
     height: 125px;
     background-color: white;
     border: 2px solid #f2f411;
-    color: #6f9ae5;
     margin: 0px; 
     font-size: 90px;
 }
 
-#letters-guessed  {
+#already-guessed  {
     width: 570px;
-    height: 125px;
+    height: 60px;
     background-color: white;
     border: 2px solid #f2f411;
-    color: #6f9ae5;
     margin-bottom: 0px;
     margin-left: -15px;
+    border-bottom: none;
+}
+
+#guessed  {
+    width: 570px;
+    height: 65px;
+    background-color: white;
+    border: 2px solid #f2f411;
+    margin-bottom: 0px;
+    margin-left: -15px;
+    border-top: none;
 }
 
 #picture-container {
@@ -54,18 +63,28 @@ body {
     background-color: white;
     border: 2px solid #f2f411;
     margin-left: -15px;
+    z-index: -1;
 }
 
 #picture {
     height: 90%;
     max-width: 90%;
+    margin: 0px;
+    margin-left: -15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#remaining {
+    font-size: 62px;
 }
 
 #message {
     width: 1110px;
     background-color: white;
     border: 2px solid #f2f411;
-    color: #6f9ae5;
     margin-left: 15px;
 }
 
