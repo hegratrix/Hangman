@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        font-size: 50px;
+        text-align: center;
+    }
+</style>
+  
+    
+<body>
+    <h2 id = "word">word</h2>
+    <h2 id = "hiddenWord">hidden</h2> 
+    <h2 id = "match">match?</h2>
+    <h2 id = "guessedAlready">guessed:</h2>
+
+
+
+
+<script>
+    const words = ['ANTEATERS', 'AGGIES', 'COUGARS', 'BUCKEYES', 'AZTECS', 'REBELS', 'GEODUCKS', 'JACKRABBITS', 'SHOCKERS', 'BRUINS']
+    const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    let compWord = []
+    compWord = randomWord ()
+    let hiddenWord = []
+    hiddenWord = hideWord ()
+    let guessed = []
+
+    document.querySelector('#word').innerHTML = compWord
+    document.querySelector('#hiddenWord').innerHTML = hiddenWord
+
+    function randomWord () {
+        let tempWord = words[Math.floor(Math.random()*words.length)]
+        let wordArray = tempWord.split('')
+        return wordArray
+        }
+
+    function hideWord () {
+        let tempWord = []
+        for (var i=0; i < compWord.length; i++) {
+            tempWord.push("_");
+        }
+        return tempWord.join("");
+    }
+
+    document.onkeyup = function (event) {
+    let letter = event.key.toLocaleUpperCase()
+        guessed.push(letter)
+        for (i=0; i < compWord.length; i++){
+            if (letter === compWord[i]){
+                document.querySelector('#match').innerHTML = "yes match"
+                document.querySelector("#guessedAlready").innerHTML = guessed
+            } else {
+                document.querySelector('#match').innerHTML = "no match"
+                document.querySelector("#guessedAlready").innerHTML = guessed
+            }
+        }
+    }
+
+
+</script>   
+</body>
+</html>
