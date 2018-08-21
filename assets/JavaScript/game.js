@@ -181,6 +181,7 @@ function makeButtons () {
         let c = alphabet[i]
         let btn = document.createElement('button')
         btn.setAttribute("id", c)
+        btn.setAttribute("onClick", "clicked(this.id)" )
         let t = document.createTextNode(c)
         btn.appendChild(t)
         let btnLetter = document.querySelector('#guessed')
@@ -215,7 +216,7 @@ function Guessed (letter) {
      return result
 }
 
-//game play when you click a button
+//game play when you use keyboard
 document.onkeyup = function (event) {
     let letter = event.key.toLocaleUpperCase()
     document.querySelector('#'+letter).style.opacity =".3"
@@ -236,3 +237,23 @@ document.onkeyup = function (event) {
     }
 }
 
+//game play when you use button
+function clicked (event) {
+    let letter = event
+    document.querySelector('#'+letter).style.opacity =".3"
+    let match = false
+    let tempWord = []
+    if (alphaCheck(letter)) {
+        alreadyGuessed.push(letter);
+        for (i=0; i < compWord.length; i++){
+            if (letter === compWord[i]){
+                tempWord = hiddenWord.split('');
+                tempWord[i] = letter
+                console.log(hiddenWord)
+                match = true
+            }
+            
+        }
+        match === true ? show(letter, tempWord): (guessesRemaining>0 ? wrong(): lose())
+    }
+}
