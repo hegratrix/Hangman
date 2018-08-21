@@ -19,7 +19,6 @@ console.log(hiddenWord)
 document.querySelector('#hidden-word').innerHTML = hiddenWord
 document.querySelector('#wins').innerHTML = "Wins: " + wins
 document.querySelector('#losses').innerHTML = "Losses: " + losses
-document.querySelector('#picture').src = "assets/Images/guesses/8 balloons.png"
 
 //picks word from array
 function randomWord () {
