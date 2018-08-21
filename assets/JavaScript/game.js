@@ -9,8 +9,9 @@ let alreadyGuessed = []
 let wins = 0
 let losses = 0
 let guessesRemaining = 8
-let winningPicture = document.querySelector("#picture").src
 let lettersRemaining = compWord.length
+let alphaButtons = []
+alphaButtons = makeButtons ()
 
 console.log(compWord)
 console.log(lettersRemaining)
@@ -18,22 +19,25 @@ console.log(hiddenWord)
 document.querySelector('#hidden-word').innerHTML = hiddenWord
 document.querySelector('#wins').innerHTML = "Wins: " + wins
 document.querySelector('#losses').innerHTML = "Losses: " + losses
+document.querySelector('#picture').src = "assets/Images/guesses/8 balloons.png"
 
+//picks word from array
 function randomWord () {
     let tempWord = words[Math.floor(Math.random()*words.length)]
-    setPicture (tempWord)
     let wordArray = tempWord.split('')
     return wordArray
     }
 
+//turns words into dashes
 function hideWord () {
     let tempWord = []
     for (var i=0; i < compWord.length; i++) {
-        tempWord.push(" _ ");
+        tempWord.push("_");
     }
     return tempWord.join("");
 }
 
+//matches word to picture to show when you win/lose
 function setPicture(tempWord) {
     switch (tempWord) {
         case 'ANTEATERS':
@@ -67,44 +71,87 @@ function setPicture(tempWord) {
             document.querySelector('#picture').src = "assets/Images/ucla.png"
             break
     }
-    document.querySelector('#picture').style.visibility = "hidden"
 }
 
+//sets picture to match number of guesses remaining
+function guessPic (guessesRemaining) {
+    switch (guessesRemaining) {
+        case 7:
+            document.querySelector('#picture').src = "assets/Images/guesses/7 balloons.png"
+            break 
+        case 6:
+            document.querySelector('#picture').src = "assets/Images/guesses/6 balloons.png"
+            break
+        case 5:
+            document.querySelector('#picture').src = "assets/Images/guesses/5 balloons.png"
+            break
+        case 4:
+            document.querySelector('#picture').src = "assets/Images/guesses/4 balloons.png"
+            break
+        case 3:
+            document.querySelector('#picture').src = "assets/Images/guesses/3 balloons.png"
+            break
+        case 2:
+            document.querySelector('#picture').src = "assets/Images/guesses/2 balloons.png"
+            break
+        case 1:
+            document.querySelector('#picture').src = "assets/Images/guesses/1 balloons.png"
+            break
+    }  
+}
+
+//resets game when you win/lose
 function reset () {
     compWord = randomWord ()
+    hiddenWord = hideWord ()
     gameState = true
     alreadyGuessed = []
     document.querySelector('#guessed').innerHTML = alreadyGuessed
     guessesRemaining = 8
     document.querySelector('#remaining').innerHTML = "You have " + guessesRemaining + " more guesses"
-    winningPicture = document.querySelector("#picture").src
+    document.querySelector('#picture').src = "assets/Images/guesses/8 balloons.png"
     lettersRemaining = compWord.length
-    document.querySelector('#picture').style.visibility = "hidden"
-    document.querySelector('#remaining').style.visibility = "visible"
     document.querySelector('#hidden-word').innerHTML = hiddenWord
+    document.querySelector('#remaining').style.visibility = "visible"
     document.querySelector('#message').innerHTML = "Pick a Letter."
+    alphaButtons = makeButtons ()
 }
 
-function show (letter) {
+//when you guess correctly, replaces the dash with the letter
+function show (letter, tempWord) {
+    console.log(tempWord)
     document.querySelector('#message').innerHTML = "You got a match!"
+    for (i=0; i < compWord.length; i++){
+        if (letter === compWord[i]){
+            tempWord[i] = letter
+            lettersRemaining--
+            hiddenWord = tempWord.join('')
             document.querySelector('#hidden-word').innerHTML = hiddenWord
             console.log(hiddenWord)
+        }
+    }
+    if (lettersRemaining === 0 ) {
+        win()
+    }
 }
 
+//if you win
 function win () {
     gameState = false
     wins++
+    setPicture (hiddenWord)
     document.querySelector('#message').innerHTML = "You guessed my word! Way to Go!"
     document.querySelector('#remaining').style.visibility = "hidden"
-    document.querySelector('#picture').style.visibility = "visible"
     document.querySelector('#wins').innerHTML = "Wins: " + wins
     setTimeout(function() {
         reset()
-        }, 4000);
+        }, 3000);
 }
 
+//when the letter isn't in the word
 function wrong () {
     guessesRemaining--
+    guessPic (guessesRemaining)
     if (guessesRemaining > 0) {
     document.querySelector('#message').innerHTML = "Wrong, guess again.";
     document.querySelector('#remaining').innerHTML = "You have " + guessesRemaining + " more guesses"
@@ -113,19 +160,35 @@ function wrong () {
     }
 }
 
+//you lose
 function lose () {
     gameState = false
     losses++
     document.querySelector('#message').innerHTML = "You didn't get my word. Try again."
     document.querySelector('#remaining').innerHTML = "You have " + guessesRemaining + " more guesses"
-    document.querySelector('#remaining').style.visibility = "hidden "
-    document.querySelector('#picture').style.visibility = "visible"       
+    tempWord = compWord.join('')
+    setPicture (tempWord)      
+    document.querySelector('#remaining').style.visibility = "hidden"
     document.querySelector('#losses').innerHTML = "Losses: " + losses
     setTimeout(function() {
         reset()
-        }, 4000);    
+        }, 3000);    
 }
 
+// makes alphabet butons
+function makeButtons () {
+    for (let i=0; i < alphabet.length; i++) {
+        let c = alphabet[i]
+        let btn = document.createElement('button')
+        btn.setAttribute("id", c)
+        let t = document.createTextNode(c)
+        btn.appendChild(t)
+        let btnLetter = document.querySelector('#guessed')
+        btnLetter.appendChild(btn)
+    }
+}
+
+//make sure you guesseed a letter
 function alphaCheck (letter) {
     let result = false
     for (let i=0; i < alphabet.length; i++) {
@@ -140,6 +203,7 @@ function alphaCheck (letter) {
     return result
 }
 
+//makes sure you haven't already guessed it
 function Guessed (letter) {
     let result = true
     for (let i=0; i < alreadyGuessed.length; i++) {
@@ -151,21 +215,24 @@ function Guessed (letter) {
      return result
 }
 
-
+//game play when you click a button
 document.onkeyup = function (event) {
     let letter = event.key.toLocaleUpperCase()
+    document.querySelector('#'+letter).style.opacity =".3"
     let match = false
+    let tempWord = []
     if (alphaCheck(letter)) {
         alreadyGuessed.push(letter);
-        document.querySelector('#guessed').innerHTML = alreadyGuessed
         for (i=0; i < compWord.length; i++){
             if (letter === compWord[i]){
-                hiddenWord[i] = letter
+                tempWord = hiddenWord.split('');
+                tempWord[i] = letter
+                console.log(hiddenWord)
                 match = true
             }
             
         }
-        match === true ? show(letter): (guessesRemaining>0 ? wrong(): lose())
+        match === true ? show(letter, tempWord): (guessesRemaining>0 ? wrong(): lose())
     }
 }
 
